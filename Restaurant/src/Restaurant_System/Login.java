@@ -1,4 +1,9 @@
 package Restaurant_System;
+// mySQLConnector;
+
+import connector.mySQLConnector;
+import java.sql.ResultSet;
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -97,7 +102,15 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_Password_TextActionPerformed
 
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
-        // TODO add your handling code here:
+        String id = Username_text.getText();
+        ResultSet rs = null;
+        rs = mySQLConnector.search("select * from sonoo.users where id = " + id + ";");
+        if (rs != null) 
+            System.out.println("Login Successful you exist in the db!");
+        else 
+            System.out.println("Login unsuccessful, please try a different username password combination");
+        
+// TODO add your handling code here:
     }//GEN-LAST:event_LoginButtonActionPerformed
 
     /**

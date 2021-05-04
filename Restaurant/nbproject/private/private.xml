@@ -3,11 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Xanakran/Documents/NetBeansProjects/Restaurant/src/Restaurant_System/Login.java</file>
-            <file>file:/C:/Users/Xanakran/Documents/NetBeansProjects/Restaurant/src/Restaurant_System/Order_Menu.java</file>
-            <file>file:/C:/Users/Xanakran/Documents/NetBeansProjects/Restaurant/src/Restaurant_System/Restaurant_System.java</file>
-            <file>file:/C:/Users/Xanakran/Documents/NetBeansProjects/Restaurant/src/Restaurant_System/Sign_Up.java</file>
-            <file>file:/C:/Users/Xanakran/Documents/NetBeansProjects/Restaurant/src/Restaurant_System/Customer_Menu.java</file>
+            <file>file:/Users/dmw/Documents/GitHub/Restaurant-DB/Restaurant/src/Restaurant_System/Restaurant_System.java</file>
+            <file>file:/Users/dmw/Documents/GitHub/Restaurant-DB/Restaurant/src/connector/mySQLConnector.java</file>
+            <file>file:/Users/dmw/Documents/GitHub/Restaurant-DB/Restaurant/src/Restaurant_System/Login.java</file>
         </group>
     </open-files>
 </project-private>
