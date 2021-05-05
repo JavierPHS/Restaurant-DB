@@ -27,18 +27,30 @@ public class Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        Banner = new javax.swing.JLabel();
+        BannerColor = new javax.swing.JLabel();
+        Background = new javax.swing.JLabel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 990, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 570, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(null);
+
+        Banner.setFont(new java.awt.Font("Verdana", 3, 36)); // NOI18N
+        Banner.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Banner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Banner.png"))); // NOI18N
+        Banner.setText("Johnny's Burgers");
+        getContentPane().add(Banner);
+        Banner.setBounds(20, 0, 480, 80);
+
+        BannerColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Color.png"))); // NOI18N
+        BannerColor.setText("jLabel1");
+        BannerColor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        getContentPane().add(BannerColor);
+        BannerColor.setBounds(0, 0, 990, 70);
+
+        Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Background1..png"))); // NOI18N
+        Background.setText("jLabel1");
+        getContentPane().add(Background);
+        Background.setBounds(0, 0, 990, 570);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -79,5 +91,8 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Background;
+    private javax.swing.JLabel Banner;
+    private javax.swing.JLabel BannerColor;
     // End of variables declaration//GEN-END:variables
 }

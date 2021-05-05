@@ -27,6 +27,8 @@ public class Sign_Up extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        R_Addressl_Text1 = new javax.swing.JTextField();
+        R_Address1 = new javax.swing.JLabel();
         Register_Label = new javax.swing.JLabel();
         R_Username = new javax.swing.JLabel();
         R_Password = new javax.swing.JLabel();
@@ -46,6 +48,18 @@ public class Sign_Up extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        R_Addressl_Text1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                R_Addressl_Text1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(R_Addressl_Text1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, 201, -1));
+
+        R_Address1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        R_Address1.setForeground(new java.awt.Color(255, 255, 255));
+        R_Address1.setText("Enter Zipcode:");
+        getContentPane().add(R_Address1, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 330, 90, 20));
 
         Register_Label.setFont(new java.awt.Font("Tw Cen MT", 3, 36)); // NOI18N
         Register_Label.setText("REGISTER ACCOUNT");
@@ -81,7 +95,7 @@ public class Sign_Up extends javax.swing.JFrame {
                 Register_ButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(Register_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 347, 390, 93));
+        getContentPane().add(Register_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 390, 93));
 
         R_Name.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         R_Name.setForeground(new java.awt.Color(255, 255, 255));
@@ -171,6 +185,10 @@ public class Sign_Up extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_R_Addressl_TextActionPerformed
 
+    private void R_Addressl_Text1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_R_Addressl_Text1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_R_Addressl_Text1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -210,7 +228,9 @@ public class Sign_Up extends javax.swing.JFrame {
     private javax.swing.JLabel Background;
     private javax.swing.JLabel BannerColor;
     private javax.swing.JLabel R_Address;
+    private javax.swing.JLabel R_Address1;
     private javax.swing.JTextField R_Addressl_Text;
+    private javax.swing.JTextField R_Addressl_Text1;
     private javax.swing.JLabel R_Email;
     private javax.swing.JTextField R_Email_Text;
     private javax.swing.JLabel R_Mobile;

@@ -55,7 +55,7 @@ public class Order_Menu extends javax.swing.JFrame {
                 DrinkButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(DrinkButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 318, 143));
+        getContentPane().add(DrinkButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 318, 143));
 
         BurgerButton.setBackground(new java.awt.Color(102, 255, 102));
         buttonGroup1.add(BurgerButton);
@@ -76,7 +76,7 @@ public class Order_Menu extends javax.swing.JFrame {
                 SideButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(SideButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 318, 143));
+        getContentPane().add(SideButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 318, 143));
 
         Banner.setBackground(new java.awt.Color(102, 255, 102));
         Banner.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

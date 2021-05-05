@@ -1,9 +1,11 @@
 package Restaurant_System;
-// mySQLConnector;
 
-import connector.mySQLConnector;
+import java.sql.Connection;
+import Connector.mySQLConnector;
 import java.sql.ResultSet;
-
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -33,10 +35,13 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        Customer_btn = new javax.swing.JRadioButton();
+        Manager_btn = new javax.swing.JRadioButton();
         Username_text = new javax.swing.JTextField();
         Enter_Username = new javax.swing.JLabel();
         Enter_Password = new javax.swing.JLabel();
-        Password_Text = new javax.swing.JTextField();
+        Password_text = new javax.swing.JPasswordField();
         Login_Text = new javax.swing.JLabel();
         LoginButton = new javax.swing.JButton();
         BannerColor = new javax.swing.JLabel();
@@ -45,41 +50,59 @@ public class Login extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        buttonGroup1.add(Customer_btn);
+        Customer_btn.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        Customer_btn.setForeground(new java.awt.Color(255, 255, 255));
+        Customer_btn.setText("I'm a Customer");
+        Customer_btn.setOpaque(false);
+        Customer_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Customer_btnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Customer_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 150, -1));
+
+        buttonGroup1.add(Manager_btn);
+        Manager_btn.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        Manager_btn.setForeground(new java.awt.Color(255, 255, 255));
+        Manager_btn.setText("I'm a Manager");
+        Manager_btn.setOpaque(false);
+        Manager_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Manager_btnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Manager_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 130, -1));
+
         Username_text.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Username_textActionPerformed(evt);
             }
         });
-        getContentPane().add(Username_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 119, -1));
+        getContentPane().add(Username_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 119, -1));
 
         Enter_Username.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         Enter_Username.setForeground(new java.awt.Color(255, 255, 255));
         Enter_Username.setText("Enter Username: ");
-        getContentPane().add(Enter_Username, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 118, -1));
+        getContentPane().add(Enter_Username, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, 118, 20));
 
         Enter_Password.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         Enter_Password.setForeground(new java.awt.Color(255, 255, 255));
         Enter_Password.setText("Enter Password: ");
-        getContentPane().add(Enter_Password, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 118, -1));
-
-        Password_Text.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Password_TextActionPerformed(evt);
-            }
-        });
-        getContentPane().add(Password_Text, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 119, -1));
+        getContentPane().add(Enter_Password, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, 118, 20));
+        getContentPane().add(Password_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 220, 120, -1));
 
         Login_Text.setFont(new java.awt.Font("Tw Cen MT", 3, 36)); // NOI18N
         Login_Text.setText("LOGIN");
         getContentPane().add(Login_Text, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, -1, 42));
 
-        LoginButton.setText("jButton1");
+        LoginButton.setText("Login");
         LoginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 LoginButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(LoginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 290, 178, 64));
+        getContentPane().add(LoginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 300, 178, 64));
 
         BannerColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Color.png"))); // NOI18N
         BannerColor.setText("jLabel1");
@@ -97,21 +120,86 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_Username_textActionPerformed
 
-    private void Password_TextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Password_TextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Password_TextActionPerformed
-
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
-        String id = Username_text.getText();
-        ResultSet rs = null;
-        rs = mySQLConnector.search("select * from sonoo.users where id = " + id + ";");
-        if (rs != null)
-            System.out.println("Login Successful you exist in the db!");
-        else
-            System.out.println("Login unsuccessful, please try a different username password combination");
-        
-// TODO add your handling code here:
+    try
+                {
+                    String username = Username_text.getText();
+                    String password = String.valueOf(Password_text.getPassword());
+                    ResultSet rs;
+                    PreparedStatement ps;
+                    Statement s;
+                    
+                    if (!username.isEmpty() && !password.isEmpty())
+                    {
+                        if (Manager_btn.isSelected())
+                        {
+                            //logging in as manager
+                            String query = "SELECT * FROM Manager WHERE managerUsername = ? AND managerPassword = ?";
+                            ps = mySQLConnector.setConnection().prepareStatement(query);
+                            ps.setString(1, username);
+                            ps.setString(2, password);
+                            rs = ps.executeQuery();
+                            //rs = s.executeQuery(query);
+                            
+                            //manager login successful
+                            if (rs.next())
+                            {
+                                String mname = rs.getString("managerName");
+                                Manager_Menu mm = new Manager_Menu(username, mname);
+                                mm.setVisible(true);
+                                this.dispose();
+                            }
+                            //manager login failed
+                            else {
+                                JOptionPane.showMessageDialog(null, "Username or Password incorrect, try again.", "LOGIN FAILED", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }
+                        else if (Customer_btn.isSelected())
+                        {
+                            //logging in as customer
+                            String query = "SELECT * FROM Customer WHERE customerUsername = ? AND customerPassword = ? ";
+                            ps = mySQLConnector.setConnection().prepareStatement(query);
+                            ps.setString(1, username);
+                            ps.setString(2, password);
+                            rs = ps.executeQuery();
+                            //s = mySQLConnector.setConnection().createStatement();
+                            //rs = s.executeQuery(query);
+                            //customer login successful
+                            if (rs.next())
+                            {
+                                String cname = rs.getString("customerName");
+                                Customer_Menu cm = new Customer_Menu(username, cname);
+                                cm.setVisible(true);
+                                this.dispose();
+                            }
+                            
+                            //customer login failed
+                            else {
+                                JOptionPane.showMessageDialog(null, "Username or Password incorrect, try again.", "LOGIN FAILED", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "Please select whether you are a Manager or Customer.", "LOGIN ERROR", JOptionPane.ERROR_MESSAGE);
+                        }
+                            
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Please fill both TextFields", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (Exception e)
+                {
+                    JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }           
     }//GEN-LAST:event_LoginButtonActionPerformed
+
+    private void Manager_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Manager_btnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Manager_btnActionPerformed
+
+    private void Customer_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Customer_btnActionPerformed
+
+    }//GEN-LAST:event_Customer_btnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -151,11 +239,14 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
     private javax.swing.JLabel BannerColor;
+    private javax.swing.JRadioButton Customer_btn;
     private javax.swing.JLabel Enter_Password;
     private javax.swing.JLabel Enter_Username;
     private javax.swing.JButton LoginButton;
     private javax.swing.JLabel Login_Text;
-    private javax.swing.JTextField Password_Text;
+    private javax.swing.JRadioButton Manager_btn;
+    private javax.swing.JPasswordField Password_text;
     private javax.swing.JTextField Username_text;
+    private javax.swing.ButtonGroup buttonGroup1;
     // End of variables declaration//GEN-END:variables
 }

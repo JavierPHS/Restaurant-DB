@@ -1,33 +1,30 @@
-package Restaurant_System;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Restaurant_System;
 
 /**
  *
  * @author Xanakran
  */
-public class Customer_Menu extends javax.swing.JFrame {
+public class Manager_Menu extends javax.swing.JFrame {
 
     /**
-     * Creates new form Customer_Menu
+     * Creates new form Manager_Menu
      */
-    public Customer_Menu() {
+    public Manager_Menu() {
         initComponents();
-        this.setLocationRelativeTo(null);
-    }
-    
-    public Customer_Menu(String user, String name) {
-        initComponents();
-        this.setLocationRelativeTo(null);
-        String[] cname = name.split(" ");
-        Welcome.setText("Welcome " + cname[0] + "!");
-        
+        //this.setLocationRelativeTo(null);
     }
 
+    public Manager_Menu(String user, String name) {
+        initComponents();
+        //this.setLocationRelativeTo(null);
+        String[] mname = name.split(" ");
+        Welcome.setText("Welcome " + mname[0] + "!");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,12 +36,10 @@ public class Customer_Menu extends javax.swing.JFrame {
 
         Welcome = new javax.swing.JLabel();
         LogoutButton = new javax.swing.JButton();
-        Order_History = new javax.swing.JButton();
-        OrderButton = new javax.swing.JButton();
-        MenuButton = new javax.swing.JButton();
         Banner = new javax.swing.JLabel();
         BannerColor = new javax.swing.JLabel();
-        BottomText = new javax.swing.JLabel();
+        AdjustMenuButton = new javax.swing.JButton();
+        ViewOrderButton = new javax.swing.JButton();
         Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -64,23 +59,6 @@ public class Customer_Menu extends javax.swing.JFrame {
         });
         getContentPane().add(LogoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 10, 129, 54));
 
-        Order_History.setText("Order_History");
-        Order_History.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(Order_History, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 330, 70));
-
-        OrderButton.setText("Order");
-        OrderButton.setBorder(new javax.swing.border.MatteBorder(null));
-        OrderButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                OrderButtonActionPerformed(evt);
-            }
-        });
-        getContentPane().add(OrderButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 330, 70));
-
-        MenuButton.setText("Menu");
-        MenuButton.setBorder(new javax.swing.border.MatteBorder(null));
-        getContentPane().add(MenuButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 330, 70));
-
         Banner.setFont(new java.awt.Font("Verdana", 3, 36)); // NOI18N
         Banner.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Banner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Banner.png"))); // NOI18N
@@ -93,9 +71,18 @@ public class Customer_Menu extends javax.swing.JFrame {
         BannerColor.setOpaque(true);
         getContentPane().add(BannerColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 990, 70));
 
-        BottomText.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Bottom_text.png"))); // NOI18N
-        BottomText.setText("jLabel2");
-        getContentPane().add(BottomText, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 540, 990, 40));
+        AdjustMenuButton.setText("Adjust Menu");
+        AdjustMenuButton.setBorder(new javax.swing.border.MatteBorder(null));
+        getContentPane().add(AdjustMenuButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 330, 70));
+
+        ViewOrderButton.setText("View Customer Order History");
+        ViewOrderButton.setBorder(new javax.swing.border.MatteBorder(null));
+        ViewOrderButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ViewOrderButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(ViewOrderButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 330, 70));
 
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Background1..png"))); // NOI18N
         Background.setText("jLabel1");
@@ -108,9 +95,9 @@ public class Customer_Menu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_LogoutButtonActionPerformed
 
-    private void OrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrderButtonActionPerformed
+    private void ViewOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewOrderButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_OrderButtonActionPerformed
+    }//GEN-LAST:event_ViewOrderButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -129,33 +116,31 @@ public class Customer_Menu extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Customer_Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Manager_Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Customer_Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Manager_Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Customer_Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Manager_Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Customer_Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Manager_Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Customer_Menu().setVisible(true);
+                new Manager_Menu().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AdjustMenuButton;
     private javax.swing.JLabel Background;
     private javax.swing.JLabel Banner;
     private javax.swing.JLabel BannerColor;
-    private javax.swing.JLabel BottomText;
     private javax.swing.JButton LogoutButton;
-    private javax.swing.JButton MenuButton;
-    private javax.swing.JButton OrderButton;
-    private javax.swing.JButton Order_History;
+    private javax.swing.JButton ViewOrderButton;
     private javax.swing.JLabel Welcome;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,12 +5,6 @@
  */
 package Restaurant_System;
 
-import connector.mySQLConnector;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Xanakran
@@ -84,7 +78,6 @@ public class Restaurant_System extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButton1ActionPerformed
-        System.out.println(evt);
         // TODO add your handling code here:
     }//GEN-LAST:event_loginButton1ActionPerformed
 
@@ -117,20 +110,8 @@ public class Restaurant_System extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {              
-                try {
-                    mySQLConnector.setConnection();
-                    ResultSet rs = mySQLConnector.search("select * from sonoo.users;");  // where id = 123;");
-                    while(rs.next()) {
-                        System.out.println(rs.getInt(1) + "    " + rs.getInt(2)); // 1 and 2 are cols
-                    }
-                    
-                    new Restaurant_System().setVisible(true);
-                    
-                    mySQLConnector.closeConnection();
-                } catch (SQLException ex) {
-                    Logger.getLogger(Restaurant_System.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            public void run() {
+                new Restaurant_System().setVisible(true);
             }
         });
     }
