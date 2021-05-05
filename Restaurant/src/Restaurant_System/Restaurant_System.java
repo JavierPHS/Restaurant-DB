@@ -59,6 +59,11 @@ public class Restaurant_System extends javax.swing.JFrame {
 
         MenuButton.setText("View Menu");
         MenuButton.setBorder(new javax.swing.border.MatteBorder(null));
+        MenuButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(MenuButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 330, 70));
 
         BannerColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Color.png"))); // NOI18N
@@ -80,6 +85,10 @@ public class Restaurant_System extends javax.swing.JFrame {
     private void loginButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_loginButton1ActionPerformed
+
+    private void MenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuButtonActionPerformed
 
     /**
      * @param args the command line arguments
