@@ -47,6 +47,11 @@ public class Restaurant_System extends javax.swing.JFrame {
         getContentPane().add(Banner, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 500, -1));
 
         signUpButton.setText("Sign Up");
+        signUpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signUpButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(signUpButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 10, 129, 54));
 
         loginButton1.setText("Login");
@@ -89,6 +94,10 @@ public class Restaurant_System extends javax.swing.JFrame {
     private void MenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_MenuButtonActionPerformed
+
+    private void signUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_signUpButtonActionPerformed
 
     /**
      * @param args the command line arguments

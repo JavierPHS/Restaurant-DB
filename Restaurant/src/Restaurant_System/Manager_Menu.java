@@ -73,6 +73,11 @@ public class Manager_Menu extends javax.swing.JFrame {
 
         AdjustMenuButton.setText("Adjust Menu");
         AdjustMenuButton.setBorder(new javax.swing.border.MatteBorder(null));
+        AdjustMenuButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AdjustMenuButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(AdjustMenuButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 330, 70));
 
         ViewOrderButton.setText("View Customer Order History");
@@ -98,6 +103,10 @@ public class Manager_Menu extends javax.swing.JFrame {
     private void ViewOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewOrderButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ViewOrderButtonActionPerformed
+
+    private void AdjustMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdjustMenuButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AdjustMenuButtonActionPerformed
 
     /**
      * @param args the command line arguments

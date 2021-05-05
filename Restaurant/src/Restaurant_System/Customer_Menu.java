@@ -66,6 +66,11 @@ public class Customer_Menu extends javax.swing.JFrame {
 
         Order_History.setText("Order_History");
         Order_History.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Order_History.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Order_HistoryActionPerformed(evt);
+            }
+        });
         getContentPane().add(Order_History, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 330, 70));
 
         OrderButton.setText("Order");
@@ -79,6 +84,11 @@ public class Customer_Menu extends javax.swing.JFrame {
 
         MenuButton.setText("Menu");
         MenuButton.setBorder(new javax.swing.border.MatteBorder(null));
+        MenuButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(MenuButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 330, 70));
 
         Banner.setFont(new java.awt.Font("Verdana", 3, 36)); // NOI18N
@@ -111,6 +121,14 @@ public class Customer_Menu extends javax.swing.JFrame {
     private void OrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrderButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_OrderButtonActionPerformed
+
+    private void MenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuButtonActionPerformed
+
+    private void Order_HistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Order_HistoryActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Order_HistoryActionPerformed
 
     /**
      * @param args the command line arguments
