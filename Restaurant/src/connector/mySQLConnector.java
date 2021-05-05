@@ -1,4 +1,4 @@
-package connector;
+package Connector;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,14 +11,14 @@ import java.util.logging.Logger;
 public class mySQLConnector {
 
     static Connection conn = null;
-
-    public static boolean setConnection() {
-        String path = "jdbc:mysql://localhost/sonoo?"
-                + "user=root&password=macotoman";
-
+    static Statement statement = null;
+    static ResultSet rs = null;
+    
+    public static Connection setConnection() {
+        String user = "root";
+        String password = "csunconnection";
         try {
-            conn = DriverManager.getConnection(path);
-            return true;
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/restaurant", user, password);
             // Do something with the Connection
         } catch (SQLException ex) {
             // handle any errors
@@ -26,7 +26,7 @@ public class mySQLConnector {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
-        return false;
+        return conn;
     }
     
     
@@ -48,6 +48,5 @@ public class mySQLConnector {
         }
         return null;
     }
-    
     
 }
