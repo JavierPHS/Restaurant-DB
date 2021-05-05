@@ -105,9 +105,9 @@ public class Login extends javax.swing.JFrame {
         String id = Username_text.getText();
         ResultSet rs = null;
         rs = mySQLConnector.search("select * from sonoo.users where id = " + id + ";");
-        if (rs != null) 
+        if (rs != null)
             System.out.println("Login Successful you exist in the db!");
-        else 
+        else
             System.out.println("Login unsuccessful, please try a different username password combination");
         
 // TODO add your handling code here:

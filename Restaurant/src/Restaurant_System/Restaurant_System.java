@@ -120,7 +120,7 @@ public class Restaurant_System extends javax.swing.JFrame {
             public void run() {              
                 try {
                     mySQLConnector.setConnection();
-                    ResultSet rs = mySQLConnector.search("select * from sonoo.users;"); // where id = 123;");
+                    ResultSet rs = mySQLConnector.search("select * from sonoo.users;");  // where id = 123;");
                     while(rs.next()) {
                         System.out.println(rs.getInt(1) + "    " + rs.getInt(2)); // 1 and 2 are cols
                     }
