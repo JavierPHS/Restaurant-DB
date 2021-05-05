@@ -88,15 +88,21 @@ public class Restaurant_System extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButton1ActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        Login loginObj = new Login();
+        loginObj.setVisible(true);
     }//GEN-LAST:event_loginButton1ActionPerformed
 
     private void MenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuButtonActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        Menu menuObj = new Menu();
+        menuObj.setVisible(true);
     }//GEN-LAST:event_MenuButtonActionPerformed
 
     private void signUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpButtonActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        Sign_Up signUpObj = new Sign_Up();
+        signUpObj.setVisible(true);
     }//GEN-LAST:event_signUpButtonActionPerformed
 
     /**
