@@ -5,6 +5,12 @@
  */
 package Restaurant_System;
 
+import Connector.mySQLConnector;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Xanakran
@@ -27,7 +33,10 @@ public class Sign_Up extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        R_Addressl_Text1 = new javax.swing.JTextField();
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        Manager_btn = new javax.swing.JRadioButton();
+        Customer_btn = new javax.swing.JRadioButton();
+        R_Zipcode_Text = new javax.swing.JTextField();
         R_Address1 = new javax.swing.JLabel();
         Register_Label = new javax.swing.JLabel();
         R_Username = new javax.swing.JLabel();
@@ -42,24 +51,48 @@ public class Sign_Up extends javax.swing.JFrame {
         R_Email_Text = new javax.swing.JTextField();
         R_Mobile_Text = new javax.swing.JTextField();
         R_Address = new javax.swing.JLabel();
-        R_Addressl_Text = new javax.swing.JTextField();
+        R_Address_Text = new javax.swing.JTextField();
         BannerColor = new javax.swing.JLabel();
         Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        R_Addressl_Text1.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(Manager_btn);
+        Manager_btn.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        Manager_btn.setForeground(new java.awt.Color(255, 255, 255));
+        Manager_btn.setText("Register a Manager");
+        Manager_btn.setOpaque(false);
+        Manager_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                R_Addressl_Text1ActionPerformed(evt);
+                Manager_btnActionPerformed(evt);
             }
         });
-        getContentPane().add(R_Addressl_Text1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, 201, -1));
+        getContentPane().add(Manager_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 160, -1));
+
+        buttonGroup1.add(Customer_btn);
+        Customer_btn.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        Customer_btn.setForeground(new java.awt.Color(255, 255, 255));
+        Customer_btn.setText("Register a Customer");
+        Customer_btn.setOpaque(false);
+        Customer_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Customer_btnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Customer_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, 170, -1));
+
+        R_Zipcode_Text.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                R_Zipcode_TextActionPerformed(evt);
+            }
+        });
+        getContentPane().add(R_Zipcode_Text, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 370, 201, -1));
 
         R_Address1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         R_Address1.setForeground(new java.awt.Color(255, 255, 255));
         R_Address1.setText("Enter Zipcode:");
-        getContentPane().add(R_Address1, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 330, 90, 20));
+        getContentPane().add(R_Address1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 90, 40));
 
         Register_Label.setFont(new java.awt.Font("Tw Cen MT", 3, 36)); // NOI18N
         Register_Label.setText("REGISTER ACCOUNT");
@@ -68,26 +101,26 @@ public class Sign_Up extends javax.swing.JFrame {
         R_Username.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         R_Username.setForeground(new java.awt.Color(255, 255, 255));
         R_Username.setText("Enter Username: ");
-        getContentPane().add(R_Username, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 100, 118, -1));
+        getContentPane().add(R_Username, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 118, 20));
 
         R_Password.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         R_Password.setForeground(new java.awt.Color(255, 255, 255));
         R_Password.setText("Enter Password: ");
-        getContentPane().add(R_Password, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 138, 118, -1));
+        getContentPane().add(R_Password, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 118, 20));
 
         R_Username_Text.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 R_Username_TextActionPerformed(evt);
             }
         });
-        getContentPane().add(R_Username_Text, new org.netbeans.lib.awtextra.AbsoluteConstraints(161, 97, 201, -1));
+        getContentPane().add(R_Username_Text, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 130, 201, -1));
 
         R_Password_Text.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 R_Password_TextActionPerformed(evt);
             }
         });
-        getContentPane().add(R_Password_Text, new org.netbeans.lib.awtextra.AbsoluteConstraints(161, 135, 201, -1));
+        getContentPane().add(R_Password_Text, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 201, -1));
 
         Register_Button.setText("Register");
         Register_Button.addActionListener(new java.awt.event.ActionListener() {
@@ -95,55 +128,55 @@ public class Sign_Up extends javax.swing.JFrame {
                 Register_ButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(Register_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 390, 93));
+        getContentPane().add(Register_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 420, 390, 93));
 
         R_Name.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         R_Name.setForeground(new java.awt.Color(255, 255, 255));
         R_Name.setText("Enter Name: ");
-        getContentPane().add(R_Name, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 176, 118, -1));
+        getContentPane().add(R_Name, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 118, 20));
 
         R_Email.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         R_Email.setForeground(new java.awt.Color(255, 255, 255));
         R_Email.setText("Enter Email Address: ");
-        getContentPane().add(R_Email, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 215, -1, -1));
+        getContentPane().add(R_Email, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, -1, 20));
 
         R_Mobile.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         R_Mobile.setForeground(new java.awt.Color(255, 255, 255));
         R_Mobile.setText("Enter Mobile Phone #: ");
-        getContentPane().add(R_Mobile, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 256, -1, -1));
+        getContentPane().add(R_Mobile, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, -1, 20));
 
         R_Name_Text.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 R_Name_TextActionPerformed(evt);
             }
         });
-        getContentPane().add(R_Name_Text, new org.netbeans.lib.awtextra.AbsoluteConstraints(161, 173, 201, -1));
+        getContentPane().add(R_Name_Text, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, 201, -1));
 
         R_Email_Text.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 R_Email_TextActionPerformed(evt);
             }
         });
-        getContentPane().add(R_Email_Text, new org.netbeans.lib.awtextra.AbsoluteConstraints(161, 212, 201, -1));
+        getContentPane().add(R_Email_Text, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 201, -1));
 
         R_Mobile_Text.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 R_Mobile_TextActionPerformed(evt);
             }
         });
-        getContentPane().add(R_Mobile_Text, new org.netbeans.lib.awtextra.AbsoluteConstraints(161, 253, 201, -1));
+        getContentPane().add(R_Mobile_Text, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 290, 201, -1));
 
         R_Address.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         R_Address.setForeground(new java.awt.Color(255, 255, 255));
         R_Address.setText("Enter Address: ");
-        getContentPane().add(R_Address, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 294, -1, -1));
+        getContentPane().add(R_Address, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, -1, 20));
 
-        R_Addressl_Text.addActionListener(new java.awt.event.ActionListener() {
+        R_Address_Text.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                R_Addressl_TextActionPerformed(evt);
+                R_Address_TextActionPerformed(evt);
             }
         });
-        getContentPane().add(R_Addressl_Text, new org.netbeans.lib.awtextra.AbsoluteConstraints(161, 291, 201, -1));
+        getContentPane().add(R_Address_Text, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, 201, 30));
 
         BannerColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Color.png"))); // NOI18N
         BannerColor.setText("jLabel1");
@@ -166,7 +199,74 @@ public class Sign_Up extends javax.swing.JFrame {
     }//GEN-LAST:event_R_Password_TextActionPerformed
 
     private void Register_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Register_ButtonActionPerformed
-        // TODO add your handling code here:
+        try
+                {
+                    String username = R_Username_Text.getText();
+                    String password = R_Password_Text.getText();
+                    String name = R_Name_Text.getText();
+                    String email = R_Email_Text.getText();
+                    String phone = R_Mobile_Text.getText();
+                    String address = R_Address_Text.getText();
+                    String zipcode = R_Zipcode_Text.getText();
+                    int cID;
+                    ResultSet rs;
+                    PreparedStatement ps;
+                    
+                    if (!username.isEmpty() && !password.isEmpty() && !name.isEmpty() && !email.isEmpty() && !phone.isEmpty() && !address.isEmpty() && !zipcode.isEmpty()) //if all fields have entries
+                    {
+                        //manager sign up
+                        if(Manager_btn.isSelected()) {
+                            //input info into database
+                            String query = "INSERT into Manager values(?,?,?,?)";
+                            ps = mySQLConnector.setConnection().prepareStatement(query);
+                            ps.setString(1, username);
+                            ps.setString(2, password);
+                            ps.setString(3, name);
+                            ps.setString(4, phone);
+                            if (ps.executeUpdate() > 0) { //insert successful
+                                String mname = name;
+                                Manager_Menu mm = new Manager_Menu(username, mname);
+                                mm.setVisible(true);
+                                this.dispose();
+                            }
+                        }
+                        
+                        //customer sign up
+                        else if (Customer_btn.isSelected()) {
+                            //input info into database
+                            System.out.println("test1");
+                            cID = mySQLConnector.genID("Customer");
+                            System.out.println("test2");
+                            String query = "INSERT into restaurant.Customer values (?,?,?,?,?,?,?)";
+                            ps = mySQLConnector.setConnection().prepareStatement(query);
+                            ps.setInt(1, cID);
+                            ps.setString(2, name);
+                            ps.setString(3, phone);
+                            ps.setString(4, address);
+                            ps.setString(5, zipcode);
+                            ps.setString(6, username);
+                            ps.setString(7, password);
+                            System.out.println("test3");
+                            if (ps.executeUpdate() > 0) { //insert successful
+                                String cname = name;
+                                Customer_Menu mm = new Customer_Menu(username, cname);
+                                mm.setVisible(true);
+                                this.dispose();
+                            }
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(null, "Please select whether you are a registering as a Manager or Customer.", "REGISTER ERROR", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                            
+                    else
+                    {
+                        JOptionPane.showMessageDialog(this, "Please fill both TextFields", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (Exception e)
+                {
+                    JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
     }//GEN-LAST:event_Register_ButtonActionPerformed
 
     private void R_Name_TextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_R_Name_TextActionPerformed
@@ -181,13 +281,21 @@ public class Sign_Up extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_R_Mobile_TextActionPerformed
 
-    private void R_Addressl_TextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_R_Addressl_TextActionPerformed
+    private void R_Address_TextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_R_Address_TextActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_R_Addressl_TextActionPerformed
+    }//GEN-LAST:event_R_Address_TextActionPerformed
 
-    private void R_Addressl_Text1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_R_Addressl_Text1ActionPerformed
+    private void R_Zipcode_TextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_R_Zipcode_TextActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_R_Addressl_Text1ActionPerformed
+    }//GEN-LAST:event_R_Zipcode_TextActionPerformed
+
+    private void Manager_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Manager_btnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Manager_btnActionPerformed
+
+    private void Customer_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Customer_btnActionPerformed
+
+    }//GEN-LAST:event_Customer_btnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -227,10 +335,11 @@ public class Sign_Up extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
     private javax.swing.JLabel BannerColor;
+    private javax.swing.JRadioButton Customer_btn;
+    private javax.swing.JRadioButton Manager_btn;
     private javax.swing.JLabel R_Address;
     private javax.swing.JLabel R_Address1;
-    private javax.swing.JTextField R_Addressl_Text;
-    private javax.swing.JTextField R_Addressl_Text1;
+    private javax.swing.JTextField R_Address_Text;
     private javax.swing.JLabel R_Email;
     private javax.swing.JTextField R_Email_Text;
     private javax.swing.JLabel R_Mobile;
@@ -241,7 +350,9 @@ public class Sign_Up extends javax.swing.JFrame {
     private javax.swing.JTextField R_Password_Text;
     private javax.swing.JLabel R_Username;
     private javax.swing.JTextField R_Username_Text;
+    private javax.swing.JTextField R_Zipcode_Text;
     private javax.swing.JButton Register_Button;
     private javax.swing.JLabel Register_Label;
+    private javax.swing.ButtonGroup buttonGroup1;
     // End of variables declaration//GEN-END:variables
 }
