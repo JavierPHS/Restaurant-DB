@@ -24,6 +24,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -127,7 +128,6 @@ public class Login extends javax.swing.JFrame {
                     String password = String.valueOf(Password_text.getPassword());
                     ResultSet rs;
                     PreparedStatement ps;
-                    Statement s;
                     
                     if (!username.isEmpty() && !password.isEmpty())
                     {
@@ -162,8 +162,6 @@ public class Login extends javax.swing.JFrame {
                             ps.setString(1, username);
                             ps.setString(2, password);
                             rs = ps.executeQuery();
-                            //s = mySQLConnector.setConnection().createStatement();
-                            //rs = s.executeQuery(query);
                             //customer login successful
                             if (rs.next())
                             {

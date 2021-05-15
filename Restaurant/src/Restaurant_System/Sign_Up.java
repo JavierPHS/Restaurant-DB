@@ -22,6 +22,7 @@ public class Sign_Up extends javax.swing.JFrame {
      */
     public Sign_Up() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -234,19 +235,16 @@ public class Sign_Up extends javax.swing.JFrame {
                         //customer sign up
                         else if (Customer_btn.isSelected()) {
                             //input info into database
-                            System.out.println("test1");
                             cID = mySQLConnector.genID("Customer");
-                            System.out.println("test2");
                             String query = "INSERT into restaurant.Customer values (?,?,?,?,?,?,?)";
                             ps = mySQLConnector.setConnection().prepareStatement(query);
                             ps.setInt(1, cID);
-                            ps.setString(2, name);
+                            ps.setString(2, username);
                             ps.setString(3, phone);
                             ps.setString(4, address);
                             ps.setString(5, zipcode);
-                            ps.setString(6, username);
+                            ps.setString(6, name);
                             ps.setString(7, password);
-                            System.out.println("test3");
                             if (ps.executeUpdate() > 0) { //insert successful
                                 String cname = name;
                                 Customer_Menu mm = new Customer_Menu(username, cname);

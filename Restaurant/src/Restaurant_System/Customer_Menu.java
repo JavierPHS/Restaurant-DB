@@ -1,5 +1,10 @@
 package Restaurant_System;
 
+import Connector.mySQLConnector;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,6 +20,8 @@ public class Customer_Menu extends javax.swing.JFrame {
     /**
      * Creates new form Customer_Menu
      */
+    String username;
+    
     public Customer_Menu() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -25,7 +32,7 @@ public class Customer_Menu extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         String[] cname = name.split(" ");
         Welcome.setText("Welcome " + cname[0] + "!");
-        
+        username = user;
     }
 
     /**
@@ -115,19 +122,52 @@ public class Customer_Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LogoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutButtonActionPerformed
-        // TODO add your handling code here:
+        Restaurant_System rs = new Restaurant_System();
+        rs.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_LogoutButtonActionPerformed
 
     private void OrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrderButtonActionPerformed
-        // TODO add your handling code here:
+        Order_Menu om = new Order_Menu();
+        om.setVisible(true);
     }//GEN-LAST:event_OrderButtonActionPerformed
 
     private void MenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuButtonActionPerformed
-        // TODO add your handling code here:
+        Menu m = new Menu();
+        m.setVisible(true);
     }//GEN-LAST:event_MenuButtonActionPerformed
 
     private void Order_HistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Order_HistoryActionPerformed
-        // TODO add your handling code here:
+    try
+        {
+            ResultSet rs;
+            PreparedStatement ps;
+            String orderID = "";
+            String orderInfo = "";
+            
+            String query = "SELECT * FROM Food_Order WHERE customerUsername = ?";
+            ps = mySQLConnector.setConnection().prepareStatement(query);
+            ps.setString(1, "JohnW");
+            rs = ps.executeQuery();
+            //customer has previous orders
+            if (rs.next()){
+                orderID = orderID + rs.getString("orderID") + "\n";
+                orderInfo += orderInfo + rs.getString("orderList") + "\n"; 
+                while (rs.next()) {
+                    orderID = orderID + rs.getString("orderID") + "\n";
+                    orderInfo += orderInfo + rs.getString("orderList") + "\n";
+                }
+                History h = new History(orderID, orderInfo);
+                h.setVisible(true);
+            }          
+            //customer does not have previous orders
+            else {
+                JOptionPane.showMessageDialog(null, "You do not yet have an order history", "Search Failed", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_Order_HistoryActionPerformed
 
     /**

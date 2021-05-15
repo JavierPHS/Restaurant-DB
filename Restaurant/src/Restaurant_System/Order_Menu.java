@@ -16,6 +16,7 @@ public class Order_Menu extends javax.swing.JFrame {
      */
     public Order_Menu() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -28,6 +29,7 @@ public class Order_Menu extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        jMenuItem1 = new javax.swing.JMenuItem();
         DrinkButton = new javax.swing.JRadioButton();
         BurgerButton = new javax.swing.JRadioButton();
         SideButton = new javax.swing.JRadioButton();
@@ -43,24 +45,30 @@ public class Order_Menu extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         Background = new javax.swing.JLabel();
 
+        jMenuItem1.setText("jMenuItem1");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(990, 610));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         DrinkButton.setBackground(new java.awt.Color(102, 255, 102));
         buttonGroup1.add(DrinkButton);
+        DrinkButton.setForeground(new java.awt.Color(255, 255, 255));
         DrinkButton.setText("Drinks");
+        DrinkButton.setOpaque(false);
         DrinkButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DrinkButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(DrinkButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 318, 143));
+        getContentPane().add(DrinkButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 318, 143));
 
         BurgerButton.setBackground(new java.awt.Color(102, 255, 102));
         buttonGroup1.add(BurgerButton);
+        BurgerButton.setForeground(new java.awt.Color(255, 255, 255));
         BurgerButton.setText("Burgers");
         BurgerButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        BurgerButton.setOpaque(false);
         BurgerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BurgerButtonActionPerformed(evt);
@@ -70,13 +78,15 @@ public class Order_Menu extends javax.swing.JFrame {
 
         SideButton.setBackground(new java.awt.Color(102, 255, 102));
         buttonGroup1.add(SideButton);
+        SideButton.setForeground(new java.awt.Color(255, 255, 255));
         SideButton.setText("Sides");
+        SideButton.setOpaque(false);
         SideButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SideButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(SideButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 318, 143));
+        getContentPane().add(SideButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 318, 143));
 
         Banner.setBackground(new java.awt.Color(102, 255, 102));
         Banner.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -173,7 +183,9 @@ public class Order_Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_Add_ItemActionPerformed
 
     private void ItemListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ItemListActionPerformed
-        // TODO add your handling code here:
+        if (BurgerButton.isSelected()) {
+            
+        }
     }//GEN-LAST:event_ItemListActionPerformed
 
     /**
@@ -227,5 +239,6 @@ public class Order_Menu extends javax.swing.JFrame {
     private javax.swing.JLabel Special_Comments;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenuItem jMenuItem1;
     // End of variables declaration//GEN-END:variables
 }

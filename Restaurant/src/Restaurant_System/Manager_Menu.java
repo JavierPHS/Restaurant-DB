@@ -16,7 +16,7 @@ public class Manager_Menu extends javax.swing.JFrame {
      */
     public Manager_Menu() {
         initComponents();
-        //this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
     }
 
     public Manager_Menu(String user, String name) {
@@ -97,11 +97,14 @@ public class Manager_Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LogoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutButtonActionPerformed
-        // TODO add your handling code here:
+        Restaurant_System rs = new Restaurant_System();
+        rs.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_LogoutButtonActionPerformed
 
     private void ViewOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewOrderButtonActionPerformed
-        // TODO add your handling code here:
+        Order_History h = new Order_History();
+        h.setVisible(true);
     }//GEN-LAST:event_ViewOrderButtonActionPerformed
 
     private void AdjustMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdjustMenuButtonActionPerformed
