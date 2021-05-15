@@ -73,7 +73,6 @@ public class Menu extends javax.swing.JFrame {
         burgersText.setRows(5);
         burgersText.setText("Hamburger : $4.99\nCheeseburger : $5.99\nBaconburger : $5.99\nBacon Cheeseburger : $6.99\nDouble Patty Burger : $5.99");
         burgersText.setBorder(null);
-        burgersText.setOpaque(false);
         burgersTab.add(burgersText, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 560, 400));
 
         Burger4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Burger4.png"))); // NOI18N
@@ -112,7 +111,6 @@ public class Menu extends javax.swing.JFrame {
         sidesText.setRows(5);
         sidesText.setText("Small Fries : $1.99\nMedium Fries : $2.49\nLarge Fries : $2.99\nOnion Rings : $2.99\nCurly Fries : $2.99\n");
         sidesText.setBorder(null);
-        sidesText.setOpaque(false);
         sidesTab.add(sidesText, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 610, 400));
 
         Sides1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Sides1.png"))); // NOI18N
@@ -153,7 +151,6 @@ public class Menu extends javax.swing.JFrame {
         drinksText.setRows(5);
         drinksText.setText("Bottled Water : $0.99\nSmall Softdrink : $1.49\nMedium Softdrink : $1.99\nLarge Softdrink : $2.29\nLemonade : $1.99\n");
         drinksText.setBorder(null);
-        drinksText.setOpaque(false);
         drinksTab.add(drinksText, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 600, 400));
 
         Drink3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Drinks3.png"))); // NOI18N
