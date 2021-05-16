@@ -6,6 +6,8 @@
 package Restaurant_System;
 
 import java.awt.BorderLayout;
+import java.util.HashMap;
+import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -518,6 +520,90 @@ public class Menu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_checkoutDrinkMenuBtnActionPerformed
 
+    private String orderParser(String ogOrder) {
+        String orderItem = null;
+        String finalOrder = null;
+        // create local variables for all types of orders (good for combining redundant quantities)
+        // some kind of hashtable with item as key and 
+        Vector baconCheeseBurger = new Vector();
+        Vector cheeseBurger = new Vector();
+        Vector baconBurger = new Vector();
+        Vector hamBurger = new Vector();
+        Vector doublePattyBurger = new Vector();
+        Vector smallFry = new Vector();
+        Vector mediumFry = new Vector();
+        Vector largeFry = new Vector();
+        Vector onionRings = new Vector();
+        Vector curlyFry = new Vector();
+        Vector bottleWater = new Vector();
+        Vector smallSoftDrink = new Vector();
+        Vector burger = new Vector();
+        Vector mediumSoftdrink = new Vector();
+        Vector largeSoftDrink = new Vector();
+        Vector lemonade = new Vector();
+        
+        
+        
+        
+        String orderNum = null;
+        
+        String[] orderTokens = ogOrder.split(" ");  // splits origional string into tokens aka words
+        for (int i = 0; i < orderTokens.length; i++) { 
+            orderItem = orderTokens[i];
+            switch (orderItem) { 
+                case "baconCheeseBurger": 
+                    baconCheeseBurger.setElementAt(1 + int(baconCheeseBurger.elementAt(0)),0);  // 0 index of item vector is the qnty
+                    break;
+                
+                default:
+                    break;  
+            }
+        }
+        
+        baconCheeseBurger.setElementAt(baconCheeseBurger.elementAt(0) * 6.99, 1);  // multiplies the price by quantity (index 0 is qnty, index 1 is price after this line)
+        
+        // pass new vector?
+        
+//        finalOrder.concat(...)
+        
+
+
+
+        
+        // first value in itemVector is price
+        // second is quantity
+        // to use ordersMap, use the keyword of the item, 
+        // then access the nested vector with the above attributes    
+        
+//        String orderItem = null;
+//        String orderNum = null;
+//        
+//        String[] orderTokens = ogOrder.split(" ");  // splits origional string into tokens aka words
+//        for (int i = 0; i < orderTokens.length; i += 2) { // iterates twice because each order has 2 attributes (qnty and name)
+//            orderNum = orderTokens[i];
+//            orderItem = orderTokens[i + 1];
+//            switch (orderItem) { 
+//                case "baconCheeseBurger": baconCheeseBurger.setElementAt(baconCheeseBurger.elementAt(0),0);
+//                    
+//            }
+            
+            
+            
+            
+//            if (i % 2 + 1) // looking for second entry, so use odd iterator to store quantity
+//                orderNum = orderTokens[i];
+//            else
+//                temp = orderTokens[i];
+            
+//        }
+        
+
+        
+        HashMap ordersMap = new HashMap();
+        ordersMap.put("baconCheeseBurger", baconCheeseBurger);
+        
+        return "0";
+    }
     /**
      * @param args the command line arguments
      */
