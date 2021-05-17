@@ -91,16 +91,19 @@ public class Restaurant_System extends javax.swing.JFrame {
     private void loginButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButton1ActionPerformed
         Login l = new Login();
         l.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_loginButton1ActionPerformed
 
     private void MenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuButtonActionPerformed
         Menu vm = new Menu();
         vm.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_MenuButtonActionPerformed
 
     private void signUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpButtonActionPerformed
         Sign_Up su = new Sign_Up();
         su.setVisible(true);
+        this.dispose();
         
     }//GEN-LAST:event_signUpButtonActionPerformed
 

@@ -14,16 +14,21 @@ public class Manager_Menu extends javax.swing.JFrame {
     /**
      * Creates new form Manager_Menu
      */
+    String username;
+    String name;
+    
     public Manager_Menu() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
 
-    public Manager_Menu(String user, String name) {
+    public Manager_Menu(String user, String n) {
         initComponents();
-        //this.setLocationRelativeTo(null);
-        String[] mname = name.split(" ");
+        this.setLocationRelativeTo(null);
+        String[] mname = n.split(" ");
         Welcome.setText("Welcome " + mname[0] + "!");
+        username = user;
+        name = n;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -108,7 +113,9 @@ public class Manager_Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_ViewOrderButtonActionPerformed
 
     private void AdjustMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdjustMenuButtonActionPerformed
-        // TODO add your handling code here:
+        Adjust_Menu am = new Adjust_Menu(username, name);
+        am.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_AdjustMenuButtonActionPerformed
 
     /**

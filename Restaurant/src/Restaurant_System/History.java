@@ -19,10 +19,12 @@ public class History extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
     
-    public History(String ID, String info) {
+    public History(String ID, String info, String status) {
         initComponents();
-        orderID.setText("\t" + ID);
-        orderInfo.setText(" -" + info);
+        this.setLocationRelativeTo(null);
+        idText.setText(ID);
+        orderInfo.setText(info);
+        orderStatusText.setText(status);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,16 +35,26 @@ public class History extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        orderStatusLabel = new javax.swing.JLabel();
         closeButton = new javax.swing.JButton();
         historyLabel = new javax.swing.JLabel();
         orderInfo = new javax.swing.JTextArea();
-        orderID = new javax.swing.JTextArea();
+        orderStatusText = new javax.swing.JTextArea();
         orderInfoLabel = new javax.swing.JLabel();
-        orderIDLabel = new javax.swing.JLabel();
         BannerColor = new javax.swing.JLabel();
+        orderIDLabel1 = new javax.swing.JLabel();
+        idText = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        orderStatusLabel.setBackground(new java.awt.Color(0, 0, 0));
+        orderStatusLabel.setForeground(new java.awt.Color(255, 255, 255));
+        orderStatusLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        orderStatusLabel.setText("Order Status");
+        orderStatusLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        orderStatusLabel.setOpaque(true);
+        getContentPane().add(orderStatusLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 70, 130, 20));
 
         closeButton.setText("Close Window");
         closeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -56,17 +68,20 @@ public class History extends javax.swing.JFrame {
         historyLabel.setText("ORDER HISTORY");
         getContentPane().add(historyLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, -1, 42));
 
+        orderInfo.setEditable(false);
         orderInfo.setColumns(20);
         orderInfo.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
         orderInfo.setRows(5);
         orderInfo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(orderInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, 800, 420));
+        getContentPane().add(orderInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, 670, 420));
 
-        orderID.setColumns(20);
-        orderID.setRows(5);
-        orderID.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        orderID.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        getContentPane().add(orderID, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 170, 420));
+        orderStatusText.setEditable(false);
+        orderStatusText.setColumns(20);
+        orderStatusText.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
+        orderStatusText.setRows(5);
+        orderStatusText.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        orderStatusText.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        getContentPane().add(orderStatusText, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 90, 130, 420));
 
         orderInfoLabel.setBackground(new java.awt.Color(0, 0, 0));
         orderInfoLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -74,27 +89,33 @@ public class History extends javax.swing.JFrame {
         orderInfoLabel.setText("Order Info");
         orderInfoLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         orderInfoLabel.setOpaque(true);
-        getContentPane().add(orderInfoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 800, 20));
-
-        orderIDLabel.setBackground(new java.awt.Color(0, 0, 0));
-        orderIDLabel.setForeground(new java.awt.Color(255, 255, 255));
-        orderIDLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        orderIDLabel.setText("OrderID");
-        orderIDLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        orderIDLabel.setOpaque(true);
-        getContentPane().add(orderIDLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 170, 20));
+        getContentPane().add(orderInfoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 670, 20));
 
         BannerColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Color.png"))); // NOI18N
         BannerColor.setText("jLabel1");
         BannerColor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         getContentPane().add(BannerColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 970, 70));
 
+        orderIDLabel1.setBackground(new java.awt.Color(0, 0, 0));
+        orderIDLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        orderIDLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        orderIDLabel1.setText("OrderID");
+        orderIDLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        orderIDLabel1.setOpaque(true);
+        getContentPane().add(orderIDLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 170, 20));
+
+        idText.setEditable(false);
+        idText.setColumns(20);
+        idText.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
+        idText.setRows(5);
+        idText.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        idText.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        getContentPane().add(idText, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 170, 420));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
-        Restaurant_System rs = new Restaurant_System();
-        rs.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_closeButtonActionPerformed
 
@@ -137,9 +158,11 @@ public class History extends javax.swing.JFrame {
     private javax.swing.JLabel BannerColor;
     private javax.swing.JButton closeButton;
     private javax.swing.JLabel historyLabel;
-    private javax.swing.JTextArea orderID;
-    private javax.swing.JLabel orderIDLabel;
+    private javax.swing.JTextArea idText;
+    private javax.swing.JLabel orderIDLabel1;
     private javax.swing.JTextArea orderInfo;
     private javax.swing.JLabel orderInfoLabel;
+    private javax.swing.JLabel orderStatusLabel;
+    private javax.swing.JTextArea orderStatusText;
     // End of variables declaration//GEN-END:variables
 }

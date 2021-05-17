@@ -21,18 +21,26 @@ public class Customer_Menu extends javax.swing.JFrame {
      * Creates new form Customer_Menu
      */
     String username;
+    String name;
+    String address;
+    int zipcode;
+    int rewards;
     
     public Customer_Menu() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
     
-    public Customer_Menu(String user, String name) {
+    public Customer_Menu(String user, String cname, String add, int zip, int points) {
         initComponents();
         this.setLocationRelativeTo(null);
-        String[] cname = name.split(" ");
-        Welcome.setText("Welcome " + cname[0] + "!");
+        String[] nameSplit = cname.split(" ");
+        Welcome.setText("Welcome " + nameSplit[0] + "!\nYou have " + points + " points!");
+        name = cname;
         username = user;
+        address = add;
+        zipcode = zip;
+        rewards = points;
     }
 
     /**
@@ -44,7 +52,7 @@ public class Customer_Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Welcome = new javax.swing.JLabel();
+        Welcome = new javax.swing.JTextArea();
         LogoutButton = new javax.swing.JButton();
         Order_History = new javax.swing.JButton();
         OrderButton = new javax.swing.JButton();
@@ -57,11 +65,13 @@ public class Customer_Menu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        Welcome.setBackground(new java.awt.Color(0,0,0,0));
+        Welcome.setColumns(20);
         Welcome.setFont(new java.awt.Font("Arial Black", 3, 18)); // NOI18N
         Welcome.setForeground(new java.awt.Color(255, 255, 255));
-        Welcome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        Welcome.setText("Welcome,");
-        getContentPane().add(Welcome, new org.netbeans.lib.awtextra.AbsoluteConstraints(659, 70, 320, 104));
+        Welcome.setRows(5);
+        Welcome.setBorder(null);
+        getContentPane().add(Welcome, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 110, 300, 190));
 
         LogoutButton.setText("Logout");
         LogoutButton.addActionListener(new java.awt.event.ActionListener() {
@@ -72,7 +82,7 @@ public class Customer_Menu extends javax.swing.JFrame {
         getContentPane().add(LogoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 10, 129, 54));
 
         Order_History.setText("Order_History");
-        Order_History.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        Order_History.setBorder(new javax.swing.border.MatteBorder(null));
         Order_History.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Order_HistoryActionPerformed(evt);
@@ -128,13 +138,15 @@ public class Customer_Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_LogoutButtonActionPerformed
 
     private void OrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrderButtonActionPerformed
-        Order_Menu om = new Order_Menu();
+        Order_Menu om = new Order_Menu(username, name, address, zipcode, rewards);
         om.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_OrderButtonActionPerformed
 
     private void MenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuButtonActionPerformed
-        Menu m = new Menu();
+        Menu m = new Menu(username, name, address, zipcode, rewards);
         m.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_MenuButtonActionPerformed
 
     private void Order_HistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Order_HistoryActionPerformed
@@ -144,20 +156,23 @@ public class Customer_Menu extends javax.swing.JFrame {
             PreparedStatement ps;
             String orderID = "";
             String orderInfo = "";
+            String orderStatus = "";
             
             String query = "SELECT * FROM Food_Order WHERE customerUsername = ?";
             ps = mySQLConnector.setConnection().prepareStatement(query);
-            ps.setString(1, "JohnW");
+            ps.setString(1, username);
             rs = ps.executeQuery();
             //customer has previous orders
             if (rs.next()){
-                orderID = orderID + rs.getString("orderID") + "\n";
-                orderInfo += orderInfo + rs.getString("orderList") + "\n"; 
+                orderID = "\t" + orderID + rs.getString("orderID") + "\n";
+                orderInfo =  " - " + orderInfo + rs.getString("orderList") + "\n"; 
+                orderStatus = orderStatus + rs.getString("orderStatus") + "\n";
                 while (rs.next()) {
-                    orderID = orderID + rs.getString("orderID") + "\n";
-                    orderInfo += orderInfo + rs.getString("orderList") + "\n";
+                    orderID =  orderID + "\t" + rs.getString("orderID") + "\n";
+                    orderInfo = orderInfo + " - " + rs.getString("orderList") + "\n";
+                    orderStatus = orderStatus + rs.getString("orderStatus") + "\n";
                 }
-                History h = new History(orderID, orderInfo);
+                History h = new History(orderID, orderInfo, orderStatus);
                 h.setVisible(true);
             }          
             //customer does not have previous orders
@@ -214,6 +229,6 @@ public class Customer_Menu extends javax.swing.JFrame {
     private javax.swing.JButton MenuButton;
     private javax.swing.JButton OrderButton;
     private javax.swing.JButton Order_History;
-    private javax.swing.JLabel Welcome;
+    private javax.swing.JTextArea Welcome;
     // End of variables declaration//GEN-END:variables
 }

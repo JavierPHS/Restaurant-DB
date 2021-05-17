@@ -37,6 +37,7 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        returnButton = new javax.swing.JButton();
         Customer_btn = new javax.swing.JRadioButton();
         Manager_btn = new javax.swing.JRadioButton();
         Username_text = new javax.swing.JTextField();
@@ -48,8 +49,16 @@ public class Login extends javax.swing.JFrame {
         BannerColor = new javax.swing.JLabel();
         Background = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        returnButton.setText("Return");
+        returnButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(returnButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 3, -1, -1));
 
         buttonGroup1.add(Customer_btn);
         Customer_btn.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
@@ -166,7 +175,10 @@ public class Login extends javax.swing.JFrame {
                             if (rs.next())
                             {
                                 String cname = rs.getString("customerName");
-                                Customer_Menu cm = new Customer_Menu(username, cname);
+                                String address = rs.getString("customerAddress");
+                                int zipcode = rs.getInt("customerZipcode");
+                                int rewards = rs.getInt("customerRewards");
+                                Customer_Menu cm = new Customer_Menu(username, cname, address, zipcode, rewards);
                                 cm.setVisible(true);
                                 this.dispose();
                             }
@@ -198,6 +210,12 @@ public class Login extends javax.swing.JFrame {
     private void Customer_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Customer_btnActionPerformed
 
     }//GEN-LAST:event_Customer_btnActionPerformed
+
+    private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
+        Restaurant_System rs = new Restaurant_System();
+        rs.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_returnButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -246,5 +264,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPasswordField Password_text;
     private javax.swing.JTextField Username_text;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton returnButton;
     // End of variables declaration//GEN-END:variables
 }

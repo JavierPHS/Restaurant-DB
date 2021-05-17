@@ -5,12 +5,10 @@
  */
 package Restaurant_System;
 
-import java.awt.BorderLayout;
-import java.util.HashMap;
-import java.util.Vector;
-import javax.swing.JFrame;
+import Connector.mySQLConnector;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
-
 
 /**
  *
@@ -18,15 +16,78 @@ import javax.swing.JOptionPane;
  */
 public class Menu extends javax.swing.JFrame {
 
-    private String currCart = "";
     /**
      * Creates new form Menu
      */
+    String cUsername;
+    String cName;
+    String address;
+    int zipcode;
+    int rewards;
+    String mUsername;
+    String mName;
+    int userFlag = 0;  // 0 = guest, 1 = customer, 2 = manager
+    
     public Menu() {
         initComponents();
         this.setLocationRelativeTo(null);
+        try {
+        ResultSet rs;
+        PreparedStatement ps;
+        String query = "SELECT * FROM Menu";
+        ps = mySQLConnector.setConnection().prepareStatement(query);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            String item = (String) rs.getString("itemName") + " : $" + rs.getFloat("itemPrice") + "\n";
+            if (rs.getString("itemType").equals("Burger")) {
+                burgersText.append(item);
+            }
+            else if (rs.getString("itemType").equalsIgnoreCase("Side")) {
+                sidesText.append(item);
+            }
+            else if (rs.getString("itemType").equalsIgnoreCase("Drink")) {
+                drinksText.append(item);
+            }
+        }
+        
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
-
+    
+    public Menu(String user, String name, String add, int zip, int points) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        cUsername = user;
+        cName = name;
+        address = add;
+        zipcode = zip;
+        userFlag = 1;
+        rewards = points;
+        try {
+        ResultSet rs;
+        PreparedStatement ps;
+        String query = "SELECT * FROM Menu";
+        ps = mySQLConnector.setConnection().prepareStatement(query);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            String item = (String) rs.getString("itemName") + " : $" + rs.getFloat("itemPrice") + "\n";
+            if (rs.getString("itemType").equals("Burger")) {
+                burgersText.append(item);
+            }
+            else if (rs.getString("itemType").equalsIgnoreCase("Side")) {
+                sidesText.append(item);
+            }
+            else if (rs.getString("itemType").equalsIgnoreCase("Drink")) {
+                drinksText.append(item);
+            }
+        }
+        
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,64 +97,32 @@ public class Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
         itemsTab = new javax.swing.JTabbedPane();
         burgersTab = new javax.swing.JPanel();
+        burgersText = new javax.swing.JTextArea();
         Burger4 = new javax.swing.JLabel();
         Burger1 = new javax.swing.JLabel();
         Burger2 = new javax.swing.JLabel();
         Burger3 = new javax.swing.JLabel();
-        checkoutBurgerMenuBtn = new javax.swing.JButton();
-        addBaconCheeseBurgerbtn = new javax.swing.JButton();
-        addCheesebgrBtn = new javax.swing.JButton();
-        addBaconBgrBtn = new javax.swing.JButton();
-        addHambgrBtn = new javax.swing.JButton();
-        addDblPattyBgrBtn = new javax.swing.JButton();
-        burgersText = new javax.swing.JTextArea();
         txtShadow1 = new javax.swing.JLabel();
         sidesTab = new javax.swing.JPanel();
+        sidesText = new javax.swing.JTextArea();
         Sides1 = new javax.swing.JLabel();
         Sides2 = new javax.swing.JLabel();
         Sides3 = new javax.swing.JLabel();
         Sides4 = new javax.swing.JLabel();
-        addSmallFryBtn = new javax.swing.JButton();
-        addMediumFryBtn = new javax.swing.JButton();
-        addLargeFryBtn = new javax.swing.JButton();
-        addOnionRingsBtn = new javax.swing.JButton();
-        addCurlyFryBtn = new javax.swing.JButton();
-        checkoutSidesMenuBtn = new javax.swing.JButton();
-        sidesText = new javax.swing.JTextArea();
         txtShadow2 = new javax.swing.JLabel();
         drinksTab = new javax.swing.JPanel();
-        checkoutBtn = new javax.swing.JButton();
+        drinksText = new javax.swing.JTextArea();
         Drink3 = new javax.swing.JLabel();
         Drink1 = new javax.swing.JLabel();
         Drink4 = new javax.swing.JLabel();
         Drink2 = new javax.swing.JLabel();
-        addBottleWaterBtn = new javax.swing.JButton();
-        addSmallSoftDrinkBtn = new javax.swing.JButton();
-        addMediumSoftDrinkBtn = new javax.swing.JButton();
-        addLargeSoftDrinkBtn = new javax.swing.JButton();
-        addLemonadeBtn = new javax.swing.JButton();
-        checkoutDrinkMenuBtn = new javax.swing.JButton();
-        drinksText = new javax.swing.JTextArea();
         txtShadow3 = new javax.swing.JLabel();
         Homebutton = new javax.swing.JButton();
         Banner = new javax.swing.JLabel();
         BannerColor = new javax.swing.JLabel();
         Background = new javax.swing.JLabel();
-        jButton14 = new javax.swing.JButton();
-
-        jButton6.setText("jButton6");
-
-        jButton7.setText("jButton7");
-
-        jButton8.setText("jButton8");
-
-        jButton12.setText("jButton12");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -104,6 +133,16 @@ public class Menu extends javax.swing.JFrame {
         burgersTab.setBackground(new java.awt.Color(255, 255, 255));
         burgersTab.setOpaque(false);
         burgersTab.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        burgersText.setEditable(false);
+        burgersText.setBackground(new java.awt.Color(0,0,0,0));
+        burgersText.setColumns(20);
+        burgersText.setFont(new java.awt.Font("Rockwell", 3, 30)); // NOI18N
+        burgersText.setForeground(new java.awt.Color(255, 255, 255));
+        burgersText.setRows(5);
+        burgersText.setBorder(null);
+        burgersText.setOpaque(false);
+        burgersTab.add(burgersText, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 560, 400));
 
         Burger4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Burger4.png"))); // NOI18N
         Burger4.setText("Burger1");
@@ -123,77 +162,6 @@ public class Menu extends javax.swing.JFrame {
         Burger3.setText("Burger1");
         burgersTab.add(Burger3, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 210, 210, 130));
 
-        checkoutBurgerMenuBtn.setBackground(java.awt.Color.red);
-        checkoutBurgerMenuBtn.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
-        checkoutBurgerMenuBtn.setForeground(new java.awt.Color(255, 255, 255));
-        checkoutBurgerMenuBtn.setText("Checkout");
-        checkoutBurgerMenuBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkoutBurgerMenuBtnActionPerformed(evt);
-            }
-        });
-        burgersTab.add(checkoutBurgerMenuBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 420, -1, -1));
-
-        addBaconCheeseBurgerbtn.setBackground(new java.awt.Color(21, 180, 47));
-        addBaconCheeseBurgerbtn.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        addBaconCheeseBurgerbtn.setText("Add to cart");
-        addBaconCheeseBurgerbtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addBaconCheeseBurgerbtnActionPerformed(evt);
-            }
-        });
-        burgersTab.add(addBaconCheeseBurgerbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 170, -1, -1));
-
-        addCheesebgrBtn.setBackground(new java.awt.Color(21, 180, 47));
-        addCheesebgrBtn.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        addCheesebgrBtn.setText("Add to cart");
-        addCheesebgrBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addCheesebgrBtnActionPerformed(evt);
-            }
-        });
-        burgersTab.add(addCheesebgrBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 100, -1, -1));
-
-        addBaconBgrBtn.setBackground(new java.awt.Color(21, 180, 47));
-        addBaconBgrBtn.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        addBaconBgrBtn.setText("Add to cart");
-        addBaconBgrBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addBaconBgrBtnActionPerformed(evt);
-            }
-        });
-        burgersTab.add(addBaconBgrBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 130, -1, -1));
-
-        addHambgrBtn.setBackground(new java.awt.Color(21, 180, 47));
-        addHambgrBtn.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        addHambgrBtn.setText("Add to cart");
-        addHambgrBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addHambgrBtnActionPerformed(evt);
-            }
-        });
-        burgersTab.add(addHambgrBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 60, -1, -1));
-
-        addDblPattyBgrBtn.setBackground(new java.awt.Color(21, 180, 47));
-        addDblPattyBgrBtn.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        addDblPattyBgrBtn.setText("Add to cart");
-        addDblPattyBgrBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addDblPattyBgrBtnActionPerformed(evt);
-            }
-        });
-        burgersTab.add(addDblPattyBgrBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 200, -1, -1));
-
-        burgersText.setEditable(false);
-        burgersText.setBackground(new java.awt.Color(0,0,0,0));
-        burgersText.setColumns(20);
-        burgersText.setFont(new java.awt.Font("Rockwell", 3, 30)); // NOI18N
-        burgersText.setForeground(new java.awt.Color(255, 255, 255));
-        burgersText.setRows(5);
-        burgersText.setText("Hamburger : $4.99\nCheeseburger : $5.99\nBaconburger : $5.99\nBacon Cheeseburger : $6.99\nDouble Patty Burger : $5.99");
-        burgersText.setBorder(null);
-        burgersTab.add(burgersText, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 560, 400));
-
         txtShadow1.setBackground(new java.awt.Color(0,0,0,128));
         txtShadow1.setOpaque(true);
         burgersTab.add(txtShadow1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 990, 460));
@@ -204,10 +172,20 @@ public class Menu extends javax.swing.JFrame {
         sidesTab.setOpaque(false);
         sidesTab.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        sidesText.setEditable(false);
+        sidesText.setBackground(new java.awt.Color(0,0,0,0));
+        sidesText.setColumns(20);
+        sidesText.setFont(new java.awt.Font("Rockwell", 3, 30)); // NOI18N
+        sidesText.setForeground(new java.awt.Color(255, 255, 255));
+        sidesText.setRows(5);
+        sidesText.setBorder(null);
+        sidesText.setOpaque(false);
+        sidesTab.add(sidesText, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 610, 400));
+
         Sides1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Sides1.png"))); // NOI18N
         Sides1.setText("Burger1");
         Sides1.setBorder(javax.swing.BorderFactory.createCompoundBorder());
-        sidesTab.add(Sides1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 80, 210, 130));
+        sidesTab.add(Sides1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 80, 220, 130));
 
         Sides2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Sides4.png"))); // NOI18N
         Sides2.setText("Burger1");
@@ -224,77 +202,6 @@ public class Menu extends javax.swing.JFrame {
         Sides4.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         sidesTab.add(Sides4, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 80, 220, 130));
 
-        addSmallFryBtn.setBackground(new java.awt.Color(21, 180, 47));
-        addSmallFryBtn.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        addSmallFryBtn.setText("Add to cart");
-        addSmallFryBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addSmallFryBtnActionPerformed(evt);
-            }
-        });
-        sidesTab.add(addSmallFryBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 60, -1, -1));
-
-        addMediumFryBtn.setBackground(new java.awt.Color(21, 180, 47));
-        addMediumFryBtn.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        addMediumFryBtn.setText("Add to cart");
-        addMediumFryBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addMediumFryBtnActionPerformed(evt);
-            }
-        });
-        sidesTab.add(addMediumFryBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 100, -1, -1));
-
-        addLargeFryBtn.setBackground(new java.awt.Color(21, 180, 47));
-        addLargeFryBtn.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        addLargeFryBtn.setText("Add to cart");
-        addLargeFryBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addLargeFryBtnActionPerformed(evt);
-            }
-        });
-        sidesTab.add(addLargeFryBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 130, -1, -1));
-
-        addOnionRingsBtn.setBackground(new java.awt.Color(21, 180, 47));
-        addOnionRingsBtn.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        addOnionRingsBtn.setText("Add to cart");
-        addOnionRingsBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addOnionRingsBtnActionPerformed(evt);
-            }
-        });
-        sidesTab.add(addOnionRingsBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 170, -1, -1));
-
-        addCurlyFryBtn.setBackground(new java.awt.Color(21, 180, 47));
-        addCurlyFryBtn.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        addCurlyFryBtn.setText("Add to cart");
-        addCurlyFryBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addCurlyFryBtnActionPerformed(evt);
-            }
-        });
-        sidesTab.add(addCurlyFryBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 200, -1, -1));
-
-        checkoutSidesMenuBtn.setBackground(java.awt.Color.red);
-        checkoutSidesMenuBtn.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
-        checkoutSidesMenuBtn.setForeground(new java.awt.Color(255, 255, 255));
-        checkoutSidesMenuBtn.setText("Checkout");
-        checkoutSidesMenuBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkoutSidesMenuBtnActionPerformed(evt);
-            }
-        });
-        sidesTab.add(checkoutSidesMenuBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 420, -1, -1));
-
-        sidesText.setEditable(false);
-        sidesText.setBackground(new java.awt.Color(0,0,0,0));
-        sidesText.setColumns(20);
-        sidesText.setFont(new java.awt.Font("Rockwell", 3, 30)); // NOI18N
-        sidesText.setForeground(new java.awt.Color(255, 255, 255));
-        sidesText.setRows(5);
-        sidesText.setText("Small Fries : $1.99\nMedium Fries : $2.49\nLarge Fries : $2.99\nOnion Rings : $2.99\nCurly Fries : $2.99\n");
-        sidesText.setBorder(null);
-        sidesTab.add(sidesText, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 560, 400));
-
         txtShadow2.setBackground(new java.awt.Color(0,0,0,128));
         txtShadow2.setOpaque(true);
         sidesTab.add(txtShadow2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 990, 460));
@@ -305,11 +212,15 @@ public class Menu extends javax.swing.JFrame {
         drinksTab.setOpaque(false);
         drinksTab.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        checkoutBtn.setBackground(new java.awt.Color(255, 0, 51));
-        checkoutBtn.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
-        checkoutBtn.setForeground(new java.awt.Color(255, 255, 255));
-        checkoutBtn.setText("Checkout");
-        drinksTab.add(checkoutBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 20, -1, -1));
+        drinksText.setEditable(false);
+        drinksText.setBackground(new java.awt.Color(0,0,0,0));
+        drinksText.setColumns(20);
+        drinksText.setFont(new java.awt.Font("Rockwell", 3, 30)); // NOI18N
+        drinksText.setForeground(new java.awt.Color(255, 255, 255));
+        drinksText.setRows(5);
+        drinksText.setBorder(null);
+        drinksText.setOpaque(false);
+        drinksTab.add(drinksText, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 600, 400));
 
         Drink3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Drinks3.png"))); // NOI18N
         Drink3.setText("Burger1");
@@ -330,77 +241,6 @@ public class Menu extends javax.swing.JFrame {
         Drink2.setText("Burger1");
         Drink2.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         drinksTab.add(Drink2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 210, 220, 150));
-
-        addBottleWaterBtn.setBackground(new java.awt.Color(21, 180, 47));
-        addBottleWaterBtn.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        addBottleWaterBtn.setText("Add to cart");
-        addBottleWaterBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addBottleWaterBtnActionPerformed(evt);
-            }
-        });
-        drinksTab.add(addBottleWaterBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 60, -1, -1));
-
-        addSmallSoftDrinkBtn.setBackground(new java.awt.Color(21, 180, 47));
-        addSmallSoftDrinkBtn.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        addSmallSoftDrinkBtn.setText("Add to cart");
-        addSmallSoftDrinkBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addSmallSoftDrinkBtnActionPerformed(evt);
-            }
-        });
-        drinksTab.add(addSmallSoftDrinkBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 100, -1, -1));
-
-        addMediumSoftDrinkBtn.setBackground(new java.awt.Color(21, 180, 47));
-        addMediumSoftDrinkBtn.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        addMediumSoftDrinkBtn.setText("Add to cart");
-        addMediumSoftDrinkBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addMediumSoftDrinkBtnActionPerformed(evt);
-            }
-        });
-        drinksTab.add(addMediumSoftDrinkBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 130, -1, -1));
-
-        addLargeSoftDrinkBtn.setBackground(new java.awt.Color(21, 180, 47));
-        addLargeSoftDrinkBtn.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        addLargeSoftDrinkBtn.setText("Add to cart");
-        addLargeSoftDrinkBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addLargeSoftDrinkBtnActionPerformed(evt);
-            }
-        });
-        drinksTab.add(addLargeSoftDrinkBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 170, -1, -1));
-
-        addLemonadeBtn.setBackground(new java.awt.Color(21, 180, 47));
-        addLemonadeBtn.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        addLemonadeBtn.setText("Add to cart");
-        addLemonadeBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addLemonadeBtnActionPerformed(evt);
-            }
-        });
-        drinksTab.add(addLemonadeBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 200, -1, -1));
-
-        checkoutDrinkMenuBtn.setBackground(java.awt.Color.red);
-        checkoutDrinkMenuBtn.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
-        checkoutDrinkMenuBtn.setForeground(new java.awt.Color(255, 255, 255));
-        checkoutDrinkMenuBtn.setText("Checkout");
-        checkoutDrinkMenuBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkoutDrinkMenuBtnActionPerformed(evt);
-            }
-        });
-        drinksTab.add(checkoutDrinkMenuBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 420, -1, -1));
-
-        drinksText.setEditable(false);
-        drinksText.setBackground(new java.awt.Color(0,0,0,0));
-        drinksText.setColumns(20);
-        drinksText.setFont(new java.awt.Font("Rockwell", 3, 30)); // NOI18N
-        drinksText.setForeground(new java.awt.Color(255, 255, 255));
-        drinksText.setRows(5);
-        drinksText.setText("Bottled Water : $0.99\nSmall Softdrink : $1.49\nMedium Softdrink : $1.99\nLarge Softdrink : $2.29\nLemonade : $1.99\n");
-        drinksText.setBorder(null);
-        drinksTab.add(drinksText, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 560, 400));
 
         txtShadow3.setBackground(new java.awt.Color(0,0,0,128));
         txtShadow3.setOpaque(true);
@@ -433,177 +273,22 @@ public class Menu extends javax.swing.JFrame {
         Background.setText("jLabel1");
         getContentPane().add(Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 990, -1));
 
-        jButton14.setText("jButton14");
-        getContentPane().add(jButton14, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 20, -1, -1));
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void HomebuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HomebuttonActionPerformed
-        Restaurant_System rs = new Restaurant_System();
-        rs.setVisible(true);
-        this.dispose();
+        if (userFlag == 0) {
+            Restaurant_System rs = new Restaurant_System();
+            rs.setVisible(true);
+            this.dispose();
+        }
+        else if (userFlag == 1) {
+            Customer_Menu cm = new Customer_Menu(cUsername, cName, address, zipcode, rewards);
+            cm.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_HomebuttonActionPerformed
 
-
-//              adding burgers by combobox
-    private void checkoutBurgerMenuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutBurgerMenuBtnActionPerformed
-        // TODO add your handling code here:
-                        
-    }//GEN-LAST:event_checkoutBurgerMenuBtnActionPerformed
-
-//              adding burgers by button
-    private void addBaconCheeseBurgerbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBaconCheeseBurgerbtnActionPerformed
-        this.currCart.concat(1 + " baconCheeseBurger ");
-    }//GEN-LAST:event_addBaconCheeseBurgerbtnActionPerformed
-    private void addCheesebgrBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCheesebgrBtnActionPerformed
-        this.currCart.concat(1 + " cheeseBurger ");
-    }//GEN-LAST:event_addCheesebgrBtnActionPerformed
-
-    private void addBaconBgrBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBaconBgrBtnActionPerformed
-        this.currCart.concat(1 + " baconBurger ");
-    }//GEN-LAST:event_addBaconBgrBtnActionPerformed
-
-    private void addHambgrBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addHambgrBtnActionPerformed
-        this.currCart.concat(1 + " hamBurger ");
-    }//GEN-LAST:event_addHambgrBtnActionPerformed
-
-    private void addDblPattyBgrBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDblPattyBgrBtnActionPerformed
-        this.currCart.concat(1 + " doublePattyBurger ");
-    }//GEN-LAST:event_addDblPattyBgrBtnActionPerformed
-
-    private void addSmallFryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSmallFryBtnActionPerformed
-        this.currCart.concat(1 + " smallFry ");
-    }//GEN-LAST:event_addSmallFryBtnActionPerformed
-
-    private void addMediumFryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMediumFryBtnActionPerformed
-        this.currCart.concat(1 + " mediumFry ");
-    }//GEN-LAST:event_addMediumFryBtnActionPerformed
-
-    private void addLargeFryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addLargeFryBtnActionPerformed
-        this.currCart.concat(1 + " largeFry ");
-    }//GEN-LAST:event_addLargeFryBtnActionPerformed
-
-    private void addOnionRingsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addOnionRingsBtnActionPerformed
-        this.currCart.concat(1 + " onionRings ");
-    }//GEN-LAST:event_addOnionRingsBtnActionPerformed
-
-    private void addCurlyFryBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCurlyFryBtnActionPerformed
-        this.currCart.concat(1 + " curlyFry ");
-    }//GEN-LAST:event_addCurlyFryBtnActionPerformed
-
-    private void checkoutSidesMenuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutSidesMenuBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_checkoutSidesMenuBtnActionPerformed
-
-    private void addBottleWaterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBottleWaterBtnActionPerformed
-        this.currCart.concat(1 + " bottleWater ");
-    }//GEN-LAST:event_addBottleWaterBtnActionPerformed
-
-    private void addSmallSoftDrinkBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSmallSoftDrinkBtnActionPerformed
-        this.currCart.concat(1 + " smallSoftDrink ");
-    }//GEN-LAST:event_addSmallSoftDrinkBtnActionPerformed
-
-    private void addMediumSoftDrinkBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMediumSoftDrinkBtnActionPerformed
-        this.currCart.concat(1 + " mediumSoftdrink ");
-    }//GEN-LAST:event_addMediumSoftDrinkBtnActionPerformed
-
-    private void addLargeSoftDrinkBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addLargeSoftDrinkBtnActionPerformed
-        this.currCart.concat(1 + " largeSoftDrink ");
-    }//GEN-LAST:event_addLargeSoftDrinkBtnActionPerformed
-
-    private void addLemonadeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addLemonadeBtnActionPerformed
-        this.currCart.concat(1 + " lemonade ");
-    }//GEN-LAST:event_addLemonadeBtnActionPerformed
-
-    private void checkoutDrinkMenuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutDrinkMenuBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_checkoutDrinkMenuBtnActionPerformed
-
-    private String orderParser(String ogOrder) {
-        String orderItem = null;
-        String finalOrder = null;
-        // create local variables for all types of orders (good for combining redundant quantities)
-        // some kind of hashtable with item as key and 
-        Vector baconCheeseBurger = new Vector();
-        Vector cheeseBurger = new Vector();
-        Vector baconBurger = new Vector();
-        Vector hamBurger = new Vector();
-        Vector doublePattyBurger = new Vector();
-        Vector smallFry = new Vector();
-        Vector mediumFry = new Vector();
-        Vector largeFry = new Vector();
-        Vector onionRings = new Vector();
-        Vector curlyFry = new Vector();
-        Vector bottleWater = new Vector();
-        Vector smallSoftDrink = new Vector();
-        Vector burger = new Vector();
-        Vector mediumSoftdrink = new Vector();
-        Vector largeSoftDrink = new Vector();
-        Vector lemonade = new Vector();
-        
-        
-        
-        
-        String orderNum = null;
-        
-        String[] orderTokens = ogOrder.split(" ");  // splits origional string into tokens aka words
-        for (int i = 0; i < orderTokens.length; i++) { 
-            orderItem = orderTokens[i];
-            switch (orderItem) { 
-                case "baconCheeseBurger": 
-                    baconCheeseBurger.setElementAt(1 + int(baconCheeseBurger.elementAt(0)),0);  // 0 index of item vector is the qnty
-                    break;
-                
-                default:
-                    break;  
-            }
-        }
-        
-        baconCheeseBurger.setElementAt(baconCheeseBurger.elementAt(0) * 6.99, 1);  // multiplies the price by quantity (index 0 is qnty, index 1 is price after this line)
-        
-        // pass new vector?
-        
-//        finalOrder.concat(...)
-        
-
-
-
-        
-        // first value in itemVector is price
-        // second is quantity
-        // to use ordersMap, use the keyword of the item, 
-        // then access the nested vector with the above attributes    
-        
-//        String orderItem = null;
-//        String orderNum = null;
-//        
-//        String[] orderTokens = ogOrder.split(" ");  // splits origional string into tokens aka words
-//        for (int i = 0; i < orderTokens.length; i += 2) { // iterates twice because each order has 2 attributes (qnty and name)
-//            orderNum = orderTokens[i];
-//            orderItem = orderTokens[i + 1];
-//            switch (orderItem) { 
-//                case "baconCheeseBurger": baconCheeseBurger.setElementAt(baconCheeseBurger.elementAt(0),0);
-//                    
-//            }
-            
-            
-            
-            
-//            if (i % 2 + 1) // looking for second entry, so use odd iterator to store quantity
-//                orderNum = orderTokens[i];
-//            else
-//                temp = orderTokens[i];
-            
-//        }
-        
-
-        
-        HashMap ordersMap = new HashMap();
-        ordersMap.put("baconCheeseBurger", baconCheeseBurger);
-        
-        return "0";
-    }
     /**
      * @param args the command line arguments
      */
@@ -656,35 +341,11 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel Sides2;
     private javax.swing.JLabel Sides3;
     private javax.swing.JLabel Sides4;
-    private javax.swing.JButton addBaconBgrBtn;
-    private javax.swing.JButton addBaconCheeseBurgerbtn;
-    private javax.swing.JButton addBottleWaterBtn;
-    private javax.swing.JButton addCheesebgrBtn;
-    private javax.swing.JButton addCurlyFryBtn;
-    private javax.swing.JButton addDblPattyBgrBtn;
-    private javax.swing.JButton addHambgrBtn;
-    private javax.swing.JButton addLargeFryBtn;
-    private javax.swing.JButton addLargeSoftDrinkBtn;
-    private javax.swing.JButton addLemonadeBtn;
-    private javax.swing.JButton addMediumFryBtn;
-    private javax.swing.JButton addMediumSoftDrinkBtn;
-    private javax.swing.JButton addOnionRingsBtn;
-    private javax.swing.JButton addSmallFryBtn;
-    private javax.swing.JButton addSmallSoftDrinkBtn;
     private javax.swing.JPanel burgersTab;
     private javax.swing.JTextArea burgersText;
-    private javax.swing.JButton checkoutBtn;
-    private javax.swing.JButton checkoutBurgerMenuBtn;
-    private javax.swing.JButton checkoutDrinkMenuBtn;
-    private javax.swing.JButton checkoutSidesMenuBtn;
     private javax.swing.JPanel drinksTab;
     private javax.swing.JTextArea drinksText;
     private javax.swing.JTabbedPane itemsTab;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JPanel sidesTab;
     private javax.swing.JTextArea sidesText;
     private javax.swing.JLabel txtShadow1;

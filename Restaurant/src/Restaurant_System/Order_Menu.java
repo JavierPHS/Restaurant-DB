@@ -5,6 +5,12 @@
  */
 package Restaurant_System;
 
+import Connector.mySQLConnector;
+import static Connector.mySQLConnector.genID;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Xanakran
@@ -14,11 +20,36 @@ public class Order_Menu extends javax.swing.JFrame {
     /**
      * Creates new form Order_Menu
      */
+    String username;
+    String name;
+    String address;
+    int zipcode;
+    int rewards;
+    String list;
+    boolean discount;
+    int[] cartQuantity = new int[100];
+    String[] cartItem = new String[100];
+    float[] cartPrice = new float[100];
+    int counter = 0;
+    boolean status = false;
+    boolean order = false;
+    int orderID;
+    
     public Order_Menu() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
 
+    public Order_Menu(String user, String cname, String add, int zip, int points) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        username = user;
+        name = cname;
+        address = add;
+        zipcode = zip;
+        rewards = points;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,44 +60,42 @@ public class Order_Menu extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        DrinkButton = new javax.swing.JRadioButton();
+        statusButton = new javax.swing.JButton();
         BurgerButton = new javax.swing.JRadioButton();
         SideButton = new javax.swing.JRadioButton();
+        DrinkButton = new javax.swing.JRadioButton();
+        shadow1 = new javax.swing.JLabel();
+        shadow2 = new javax.swing.JLabel();
+        shadow3 = new javax.swing.JLabel();
+        returnButton = new javax.swing.JButton();
         Banner = new javax.swing.JLabel();
         Select_item = new javax.swing.JLabel();
         Adjust_Quantity = new javax.swing.JLabel();
         Special_Comments = new javax.swing.JLabel();
         ItemList = new javax.swing.JComboBox<>();
         Quantity_spinner = new javax.swing.JSpinner();
-        Comments_Text = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        cartText = new javax.swing.JTextArea();
         Finish_Order = new javax.swing.JButton();
         Add_Item = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        color = new javax.swing.JLabel();
         Background = new javax.swing.JLabel();
 
-        jMenuItem1.setText("jMenuItem1");
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(990, 610));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        DrinkButton.setBackground(new java.awt.Color(102, 255, 102));
-        buttonGroup1.add(DrinkButton);
-        DrinkButton.setForeground(new java.awt.Color(255, 255, 255));
-        DrinkButton.setText("Drinks");
-        DrinkButton.setOpaque(false);
-        DrinkButton.addActionListener(new java.awt.event.ActionListener() {
+        statusButton.setText("Order Status");
+        statusButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DrinkButtonActionPerformed(evt);
+                statusButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(DrinkButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 318, 143));
+        getContentPane().add(statusButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 100, 200, 30));
 
         BurgerButton.setBackground(new java.awt.Color(102, 255, 102));
         buttonGroup1.add(BurgerButton);
         BurgerButton.setForeground(new java.awt.Color(255, 255, 255));
-        BurgerButton.setText("Burgers");
+        BurgerButton.setSelected(true);
         BurgerButton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         BurgerButton.setOpaque(false);
         BurgerButton.addActionListener(new java.awt.event.ActionListener() {
@@ -79,7 +108,6 @@ public class Order_Menu extends javax.swing.JFrame {
         SideButton.setBackground(new java.awt.Color(102, 255, 102));
         buttonGroup1.add(SideButton);
         SideButton.setForeground(new java.awt.Color(255, 255, 255));
-        SideButton.setText("Sides");
         SideButton.setOpaque(false);
         SideButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,6 +115,43 @@ public class Order_Menu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(SideButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 318, 143));
+
+        DrinkButton.setBackground(new java.awt.Color(102, 255, 102));
+        buttonGroup1.add(DrinkButton);
+        DrinkButton.setForeground(new java.awt.Color(255, 255, 255));
+        DrinkButton.setOpaque(false);
+        DrinkButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DrinkButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(DrinkButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 318, 143));
+
+        shadow1.setBackground(new java.awt.Color (0,0,0,128));
+        shadow1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/burgerButton.png"))); // NOI18N
+        shadow1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        shadow1.setOpaque(true);
+        getContentPane().add(shadow1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 310, 70));
+
+        shadow2.setBackground(new java.awt.Color (0,0,0,128));
+        shadow2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/sidesButton.png"))); // NOI18N
+        shadow2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        shadow2.setOpaque(true);
+        getContentPane().add(shadow2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 280, 70));
+
+        shadow3.setBackground(new java.awt.Color (0,0,0,128));
+        shadow3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/drinkButton.png"))); // NOI18N
+        shadow3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        shadow3.setOpaque(true);
+        getContentPane().add(shadow3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 280, 70));
+
+        returnButton.setText("Return Home");
+        returnButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(returnButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 10, 129, 54));
 
         Banner.setBackground(new java.awt.Color(102, 255, 102));
         Banner.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -106,10 +171,10 @@ public class Order_Menu extends javax.swing.JFrame {
 
         Special_Comments.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         Special_Comments.setForeground(new java.awt.Color(255, 255, 255));
-        Special_Comments.setText("Special Comments:");
+        Special_Comments.setText("Item Cart: ");
         getContentPane().add(Special_Comments, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 340, -1, 33));
 
-        ItemList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ItemList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hamburger : $4.99", "Cheeseburger : $5.99", "Bacon Burger : $5.99", "Bacon Cheeseburger : $6.99", "Double Patty Burger : $5.99" }));
         ItemList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ItemListActionPerformed(evt);
@@ -118,16 +183,22 @@ public class Order_Menu extends javax.swing.JFrame {
         getContentPane().add(ItemList, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 180, 225, 36));
 
         Quantity_spinner.setFont(new java.awt.Font("Verdana", 3, 14)); // NOI18N
-        getContentPane().add(Quantity_spinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 260, 55, 29));
-
-        Comments_Text.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        Comments_Text.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        Comments_Text.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Comments_TextActionPerformed(evt);
+        Quantity_spinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        Quantity_spinner.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                Quantity_spinnerPropertyChange(evt);
             }
         });
-        getContentPane().add(Comments_Text, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 340, 218, 102));
+        getContentPane().add(Quantity_spinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 260, 55, 29));
+
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        cartText.setEditable(false);
+        cartText.setColumns(20);
+        cartText.setRows(5);
+        jScrollPane1.setViewportView(cartText);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 340, 220, 100));
 
         Finish_Order.setText("Finish Order");
         Finish_Order.addActionListener(new java.awt.event.ActionListener() {
@@ -137,7 +208,7 @@ public class Order_Menu extends javax.swing.JFrame {
         });
         getContentPane().add(Finish_Order, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 490, 165, 59));
 
-        Add_Item.setText("Add Item to Order");
+        Add_Item.setText("Add Item to Cart");
         Add_Item.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Add_ItemActionPerformed(evt);
@@ -145,10 +216,10 @@ public class Order_Menu extends javax.swing.JFrame {
         });
         getContentPane().add(Add_Item, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 490, 165, 59));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Color.png"))); // NOI18N
-        jLabel1.setText("jLabel1");
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 990, 70));
+        color.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Color.png"))); // NOI18N
+        color.setText("jLabel1");
+        color.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        getContentPane().add(color, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 990, 70));
 
         Background.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/Background1..png"))); // NOI18N
@@ -159,34 +230,198 @@ public class Order_Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void DrinkButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DrinkButtonActionPerformed
-        // TODO add your handling code here:
+        try {
+        PreparedStatement ps;
+        ResultSet rs;
+        String query = "SELECT * FROM Menu";
+        ps = mySQLConnector.setConnection().prepareStatement(query);
+        rs = ps.executeQuery();
+        ItemList.removeAllItems();
+        while (rs.next()) {
+            if (rs.getString("itemType").equalsIgnoreCase("Drink")) {
+                ItemList.addItem(rs.getString("itemName") + " : $" + rs.getFloat("itemPrice"));
+            }
+        }
+        } catch (Exception e) {
+            
+        }
     }//GEN-LAST:event_DrinkButtonActionPerformed
 
     private void BurgerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BurgerButtonActionPerformed
-        // TODO add your handling code here:
+        try {
+        PreparedStatement ps;
+        ResultSet rs;
+        String query = "SELECT * FROM Menu";
+        ps = mySQLConnector.setConnection().prepareStatement(query);
+        rs = ps.executeQuery();
+        ItemList.removeAllItems();
+        while (rs.next()) {
+            if (rs.getString("itemType").equalsIgnoreCase("Burger")) {
+                ItemList.addItem(rs.getString("itemName") + " : $" + rs.getFloat("itemPrice"));
+            }
+        }
+        } catch (Exception e) {
+            
+        }
     }//GEN-LAST:event_BurgerButtonActionPerformed
 
-    private void Comments_TextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Comments_TextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Comments_TextActionPerformed
-
     private void SideButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SideButtonActionPerformed
-        // TODO add your handling code here:
+        try {
+        PreparedStatement ps;
+        ResultSet rs;
+        String query = "SELECT * FROM Menu";
+        ps = mySQLConnector.setConnection().prepareStatement(query);
+        rs = ps.executeQuery();
+        ItemList.removeAllItems();
+        while (rs.next()) {
+            if (rs.getString("itemType").equalsIgnoreCase("Side")) {
+                ItemList.addItem(rs.getString("itemName") + " : $" + rs.getFloat("itemPrice"));
+            }
+        }
+        } catch (Exception e) {
+            
+        }
     }//GEN-LAST:event_SideButtonActionPerformed
 
     private void Finish_OrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Finish_OrderActionPerformed
-        // TODO add your handling code here:
+        try {
+            if (order == false) {
+                PreparedStatement ps;
+                ResultSet rs;
+                //add everything in cart to a single string
+                if (counter == 1) {
+                    list = cartQuantity[0] + " " + cartItem[0];
+                }
+                else if (counter == 2) {
+                    list = cartQuantity[0] + " " + cartItem[0] + ", " + cartQuantity[1] + " " + cartItem[1];
+                }
+                else {
+                    list = cartQuantity[0] + " " + cartItem[0] + ", ";
+                    for (int i = 1; i < counter-1; i++) {
+                        list = list + cartQuantity[i] + " " + cartItem[i] +  ", ";
+                    }
+                    list = list + cartQuantity[counter-1] + " " + cartItem[counter-1];
+                }
+                //send order info to database
+                if (rewards >= 500) {
+                    int reply = JOptionPane.showConfirmDialog(null, "You have enough points to get $5 off this meal. Would you like to use it?", "Discount Option", JOptionPane.YES_NO_OPTION);
+                    if (reply == JOptionPane.YES_OPTION) {
+                        String query = "UPDATE Customer SET customerRewards = ? WHERE customerUsername = ?";
+                        ps = mySQLConnector.setConnection().prepareStatement(query);
+                        rewards -= 500;
+                        ps.setInt(1, rewards);
+                        ps.setString(2, username);
+                        if (ps.executeUpdate() > 0) { //insert successful
+                            discount = true;
+                            int total = 1;
+                            for (int i = 0; i < counter; i++) {
+                                int price = (int) (cartQuantity[i] * cartPrice[i]);
+                                total += price;
+                            }
+                            total -= 5;
+                            if (total <= 0) {
+                                total = 0;
+                            }
+                            rewards = (int) (rewards + (total*10));
+                            query = "UPDATE Customer SET customerRewards = ? WHERE customerUsername = ?";
+                            ps = mySQLConnector.setConnection().prepareStatement(query);
+                            ps.setInt(1, rewards);
+                            ps.setString(2, username);
+                            ps.executeUpdate();
+                        }
+                    }
+                }
+                if (!discount) {
+                    int total = 1;
+                    for (int i = 0; i < counter; i++) {
+                        int price = (int) (cartQuantity[i] * cartPrice[i]);
+                        total += price;
+                    }
+                    rewards = (int) (rewards + (total*10));
+                    String query = "UPDATE Customer SET customerRewards = ? WHERE customerUsername = ?";
+                    ps = mySQLConnector.setConnection().prepareStatement(query);
+                    ps.setInt(1, rewards);
+                    ps.setString(2, username);
+                    ps.executeUpdate();
+                }
+                orderID = genID("Order");
+                String query = "INSERT into Food_Order values(?,?,?,?,?,?)";
+                ps = mySQLConnector.setConnection().prepareStatement(query);
+                ps.setInt(1, orderID);
+                ps.setString(2, username);
+                ps.setString(3, list);
+                ps.setString(4, address);
+                ps.setInt(5, zipcode);
+                ps.setString(6, "En route");
+                if (ps.executeUpdate() > 0) { //insert successful
+                    Receipt re = new Receipt(cartItem, cartQuantity, cartPrice, counter, discount);
+                    re.setVisible(true);
+                    order = true;
+                }
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Return to Main Menu before ordering again");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_Finish_OrderActionPerformed
 
     private void Add_ItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add_ItemActionPerformed
-        // TODO add your handling code here:
+        cartQuantity[counter] = (int) Quantity_spinner.getValue();  // log item quantity
+        String item = (String) ItemList.getSelectedItem();          
+        String[] itemSplit = item.split(":");
+        cartItem[counter] = itemSplit[0];                           //log item name
+        float price = Float.parseFloat(itemSplit[1].substring(2));
+        cartPrice[counter] = price;                                 //log item price
+        counter++;
+        
+        //add item to cart
+        cartText.append(Quantity_spinner.getValue() + " " + item + "\n");
+        Quantity_spinner.setValue(1);
     }//GEN-LAST:event_Add_ItemActionPerformed
 
     private void ItemListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ItemListActionPerformed
-        if (BurgerButton.isSelected()) {
-            
-        }
+
     }//GEN-LAST:event_ItemListActionPerformed
+
+    private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
+        Customer_Menu cm = new Customer_Menu(username, name, address, zipcode, rewards);
+        cm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_returnButtonActionPerformed
+
+    private void Quantity_spinnerPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_Quantity_spinnerPropertyChange
+
+    }//GEN-LAST:event_Quantity_spinnerPropertyChange
+
+    private void statusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusButtonActionPerformed
+        try {
+        PreparedStatement ps;
+        ResultSet rs;
+        if (!order) {
+            JOptionPane.showMessageDialog(this, "Order has not been placed yet");
+        }
+        else {
+            if (!status) {
+                JOptionPane.showMessageDialog(this, "Your order is en route!");
+                status = true;
+            }
+            else {
+                String query = "UPDATE Food_Order SET orderStatus = ? WHERE orderID = ?";
+                ps = mySQLConnector.setConnection().prepareStatement(query);
+                ps.setString(1, "Delivered");
+                ps.setInt(2, orderID);
+                if (ps.executeUpdate() > 0) { //insert successful
+                    JOptionPane.showMessageDialog(this, "Your order has been delivered");
+                }
+            }
+        }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_statusButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -229,7 +464,6 @@ public class Order_Menu extends javax.swing.JFrame {
     private javax.swing.JLabel Background;
     private javax.swing.JLabel Banner;
     private javax.swing.JRadioButton BurgerButton;
-    private javax.swing.JTextField Comments_Text;
     private javax.swing.JRadioButton DrinkButton;
     private javax.swing.JButton Finish_Order;
     private javax.swing.JComboBox<String> ItemList;
@@ -238,7 +472,13 @@ public class Order_Menu extends javax.swing.JFrame {
     private javax.swing.JRadioButton SideButton;
     private javax.swing.JLabel Special_Comments;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JTextArea cartText;
+    private javax.swing.JLabel color;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton returnButton;
+    private javax.swing.JLabel shadow1;
+    private javax.swing.JLabel shadow2;
+    private javax.swing.JLabel shadow3;
+    private javax.swing.JButton statusButton;
     // End of variables declaration//GEN-END:variables
 }
