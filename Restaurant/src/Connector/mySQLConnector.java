@@ -71,7 +71,7 @@ public class mySQLConnector {
                 return id;
             }
             //gen id for orderID
-            else {
+            else if ("Order".equals(table)){
                 query = "SELECT orderID FROM Food_Order";
                 ps = mySQLConnector.setConnection().prepareStatement(query);
                 rs = ps.executeQuery(query);
@@ -82,7 +82,19 @@ public class mySQLConnector {
                     }
                     id++;
                 }
-                id++;
+                return id;
+            }
+            else {
+                query = "SELECT itemID FROM Menu";
+                ps = mySQLConnector.setConnection().prepareStatement(query);
+                rs = ps.executeQuery(query);
+                while (rs.next()) {
+                    int x = rs.getInt("itemID");
+                    if (id != x) { //if id value is not currently in database
+                        return id;
+                    }
+                    id++;
+                }
                 return id;
             }
         } catch (SQLException e) {
